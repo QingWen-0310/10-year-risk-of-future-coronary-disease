@@ -8,6 +8,8 @@ bibliography: reference.bib
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
 ```
 
 # Note(Github Repo)
@@ -20,17 +22,35 @@ knitr::opts_chunk$set(echo = TRUE)
 # Introduction
 There has been a rising awareness globally towards improving human health and promoting the importance of tracking one's own health status. As an increasing amount of innovating technology comes out around the world, enhancement in medical equipments and new breakthoughs within the medical field has provided strengthened understanding towards diseases that were once thought untreatable. Doctors and scientists are also utilizing their expertise to convince people what should be done in their normal life as an early prevention for any preventable diseases. 
 
-Among all the diseases that could cause early death of an individual, cardio vascular disease(CVD) accounts for the number one reason of such deaths. According to the [@citeWHO], an estimated 17.9 million people died from CVDs in 2016, which accounted for approximately 31% of the global deaths. Looking more closely, CVD is a group of disorders of the heart and blood vessels, including disorders like cerebrovascular disease, coronary heart disease(CHD), and congenital heart disease. However, even  the high death rate, CVD is considered to be preventable if individuals could address their behavioral risk factors.
+Among all the diseases that could cause early death of an individual, cardio vascular disease(CVD) accounts for the number one reason of such deaths. According to the World Health Organization, an estimated 17.9 million people died from CVDs in 2016, which accounted for approximately 31% of the global deaths[@citeWHO]. Looking more closely, CVD is a group of disorders of the heart and blood vessels, including disorders like cerebrovascular disease, coronary heart disease(CHD), and congenital heart disease. However, even with the high death rate, CVD is considered to be preventable if individuals could address their behavioral risk factors.
 
-With no special preference, CHD is picked as the objective of our study and we want to find potential factors that help determine the risk of individuals being diagnolized with CHD. According to the [@citeMayo], CHD is the disorder caused by the damage to the major blood vessel. Cholesterol-containing deposits accumulate within the arteries and gradually narrow the blood vessels, making it hard to deliver blood and essential nutrients to the heart. As the risk of blocking the blood vessels likely to develop over decades, it becomes difficult for one to early diagnose a problem, probably not  until one got a completely block of the arteries which causes a heart attack.
+With no special preference, CHD is picked as the objective of our study and we want to find potential factors that help determine the risk of individuals being diagnolized with CHD. According to the Mayo Clinic, CHD is the disorder caused by the damage to the major blood vessel. Cholesterol-containing deposits accumulate within the arteries and gradually narrow the blood vessels, making it hard to deliver blood and essential nutrients to the heart[@citeMayo]. As the risk of blocking the blood vessels likely to develop over decades, it becomes difficult for one to early diagnose the problem, probably not until one got a completely block of the arteries which causes a heart attack.
 
 Therefore, in this study, potential risk factors contributing to the development of CHD is analyzed, and a logistic model is fitted to predict the probability of one being diagnosed with CHD in the future. In the end, we want to develop the importance of paying attention to ceratain health indications to help people adapt a healthier lifestyle in the effort of decreasing the risk of having a CHD. 
 
-The study will be conducted using the data obtained from a well-known longitudinal study regarding heart disease, namely the Framingham Heart Study which was launched in 1948. In the Methodology section, more detailed information on the data would be provided and the underlying theory for the logistic model will be presented. Results regarding the analysis of the variables and the model output will be included in the Result section. Finally, further inferences regarding the results and any weaknesses associated with the study will be included in the Discussion section. 
+The study will be conducted using the data obtained from a well-known longitudinal study regarding heart disease, namely the Framingham Heart Study which was first launched in 1948. In the Methodology section, more detailed information on the data would be provided and the underlying theory for the logistic model will be presented. Results regarding the analysis of the variables and the model output will be included in the Result section. Finally, further inferences regarding the results and any weaknesses associated with the study will be included in the Discussion section. 
 
 
 # Methodology
 ## Data
+### Framingham Heart Study(FHS)
+The Framingham Heart Study(FHS) is an ongoing longitudinal study on heart disease. With a history of 72 years, FHS has successfully altered public approaches to treat CVDs. Back to 1948, little was known about the heart disease despite its cause for the increasing death rate. What FHS has accomplished is revolutionary, as it contributes to uncovering general patterns and trends which is meaningful and applicable to the general population[@citeNHLBI].
+
+As the study began in 1948, the first generation of the participants consisted of 5,209 men and women aged between 30-62 years from the town of Framingham, Massachusetts, who have not yet develop any noticeable symptoms of heart disease and have not had a stroke or heart attack beforehands[@citeFHS]. The participants were recruited and had their physical status extensively examined and recorded, and were expected to return for another round of detailed examination and lab tests every 5 to 6 years since then. In 1971, the next generation of these participants were enrolled in the study, and in 2002, the grandchildren of the original participants were examined for the new phase of the study. 
+
+### Data for Study
+The dataset used in this study is obtained from Kaggle for which the author requested from the original study. However, little details have been provided regarding which round of the study these observations are taken from, so we could not generalize the results to the specific study population. But the aim of this study is to determine the potential risk factors that could serve for the prediction of the risk of having a CHD. With the 4238 observations and 16 variables within the dataset, we can use the prescribed model to yield predictions and provide analysis regarding some important variables in determining risks. 
+
+Table 1 shows an overview of the data structure. The variable TenYearCHD indicates whether the patient has a 10-year-risk of developing a CHD, so we will use this as the binary response in the logistic model. Among all the potential predictors, variables male, age, currentSmoker, BPMeds, diabetes, totChol, BMI are selected as predictors in this study. 
+
+
+Table 1: An Overview of the Data on Heart Disease Used in the Study
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+heart_data <- read_csv("C:/Users/10128/Desktop/STA304/Final project/cleaned_data.csv")
+knitr::kable(head(heart_data))
+```
+
+
 
 ## Model
 
