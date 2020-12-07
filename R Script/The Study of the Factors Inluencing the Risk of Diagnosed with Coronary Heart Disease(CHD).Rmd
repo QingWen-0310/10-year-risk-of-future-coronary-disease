@@ -41,15 +41,23 @@ As the study began in 1948, the first generation of the participants consisted o
 ### Data for Study
 The dataset used in this study is obtained from Kaggle for which the author requested from the original study. However, little details have been provided regarding which round of the study these observations are taken from, so we could not generalize the results to the specific study population. But the aim of this study is to determine the potential risk factors that could serve for the prediction of the risk of having a CHD. With the 4238 observations and 16 variables within the dataset, we can use the prescribed model to yield predictions and provide analysis regarding some important variables in determining risks. 
 
-Table 1 shows an overview of the data structure. The variable TenYearCHD indicates whether the patient has a 10-year-risk of developing a CHD, so we will use this as the binary response in the logistic model. Among all the potential predictors, variables male, age, currentSmoker, BPMeds, diabetes, totChol, BMI are selected as predictors in this study. 
-
-
+Table 1 shows an overview of the data structure. 
 Table 1: An Overview of the Data on Heart Disease Used in the Study
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 heart_data <- read_csv("C:/Users/10128/Desktop/STA304/Final project/cleaned_data.csv")
 knitr::kable(head(heart_data))
 ```
 
+Definitions for each of the variables is given here:
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+variable_name = variable.names(heart_data)
+meaning <- c("whether the patient is male", "the age of the patient", "whether the patient is currently smoking", "cigarettes per day if the patient is smoking", "whether the patient is on blood pressure medication", "whether the patient had a stroke before", "whether the patient is hypertensive", "whether the patient has diabetes", "total cholestrol level", "systolic blood pressure", "diastolic blood pressure", "Body Mass Index", "the patient's heart rate", "whether the patient has a 10-year-risk of CHD")
+
+knitr::kable(data.frame(variable_name, meaning))
+```
+
+
+The variable TenYearCHD indicates whether the patient has a 10-year-risk of developing a CHD, so we will use this as the binary response in the logistic model. Among all the potential predictors, variables **male**, **age**, **currentSmoker**, **BPMeds**, **diabetes**, **totChol**, **BMI** are selected as predictors in this study. As we have previously noted, the CHD devlops as the main blood vessels are blocked by cholestrol-containing deposits, which is a huge indication on healthy lifestype and physical status like total cholestrol value and BMI. Also, sex and age are often common factors that are involved in disease development. Hence, these variables are selected for further study.
 
 
 ## Model
@@ -66,9 +74,12 @@ knitr::kable(head(heart_data))
 ## Next Steps
 
 
+# Appendix
+
+
 # References
 
 
 
-# Appendix
+
 

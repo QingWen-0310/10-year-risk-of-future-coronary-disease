@@ -14,13 +14,22 @@ library(tidyverse)
 library(skimr)
 # read in the original dataset
 heart_data_original <- read_csv("C:/Users/10128/Desktop/STA304/Final project/framingham.csv")
-skim(heart_data_original)
+# skim(heart_data_original)
 
 # take out two variables and remove the missing values in the rest of the observations
 heart_data <- heart_data_original %>% 
   select(-c(education, glucose)) %>% 
   na.omit() 
 
+# heart_data <- heart_data %>% 
+#   rename(cigarettesPerDay = cigsPerDay) %>% 
+#   rename(onBloodPressureMedication = BPMeds) %>% 
+#   rename(previouslyHadStroke = prevalentStroke) %>% 
+#   rename(previouslyHypertensive = prevalentHyp) %>% 
+#   rename(totalCholestrolLevel = totChol) %>% 
+#   rename(systolicBloodPressure = sysBP) %>% 
+#   rename(diastolicBloodPressure = diaBP)
+  
 skim(heart_data)
 
 # save the cleaned dataset 
