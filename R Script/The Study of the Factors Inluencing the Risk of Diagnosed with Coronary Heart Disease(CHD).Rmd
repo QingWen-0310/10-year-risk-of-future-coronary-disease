@@ -45,7 +45,11 @@ Table 1 shows an overview of the data structure.
 Table 1: An Overview of the Data on Heart Disease Used in the Study
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 heart_data <- read_csv("C:/Users/10128/Desktop/STA304/Final project/cleaned_data.csv")
-knitr::kable(head(heart_data))
+
+heart_data_1 <- heart_data[1:7]
+heart_data_2 <- heart_data[8:14]
+knitr::kable(head(heart_data_1))
+knitr::kable(head(heart_data_2))
 ```
 
 Definitions for each of the variables is given here:
