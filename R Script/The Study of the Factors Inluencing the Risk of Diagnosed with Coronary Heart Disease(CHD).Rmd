@@ -1,7 +1,7 @@
 ---
 title: "The Study of the Factors Inluencing the Risk of Diagnosed with Coronary Heart Disease(CHD)"
-author: "Qing Wen"
-date: "2020/12/4"
+author: ""
+date: "2020/12/9"
 output: pdf_document
 bibliography: reference.bib
 ---
@@ -39,12 +39,17 @@ The Framingham Heart Study(FHS) is an ongoing longitudinal study on heart diseas
 As the study began in 1948, the first generation of the participants consisted of 5,209 men and women aged between 30-62 years from the town of Framingham, Massachusetts, who have not yet develop any noticeable symptoms of heart disease and have not had a stroke or heart attack beforehands[@citeFHS]. The participants were recruited and had their physical status extensively examined and recorded, and were expected to return for another round of detailed examination and lab tests every 5 to 6 years since then. In 1971, the next generation of these participants were enrolled in the study, and in 2002, the grandchildren of the original participants were examined for the new phase of the study. 
 
 ### Data for Study
-The dataset used in this study is obtained from Kaggle for which the author requested from the original study. However, little details have been provided regarding which round of the study these observations are taken from, so we could not generalize the results to the specific study population. But the aim of this study is to determine the potential risk factors that could serve for the prediction of the risk of having a CHD. With the 4238 observations and 16 variables within the dataset, we can use the prescribed model to yield predictions and provide analysis regarding some important variables in determining risks. 
+The dataset used in this study is obtained from Kaggle for which the author requested from the original study. However, little details have been provided regarding which round of the study these observations are taken from, so we could not generalize the results to the specific study population. But the aim of this study is to determine the potential risk factors that could serve for the prediction of the risk of having a CHD. With the 4238 observations and 16 variables within the dataset after cleaning, we can use the prescribed model to yield predictions and provide analysis regarding some important variables in determining risks. 
+
+The original dataset is almost clean and does not require too much of the manipulation. We removed the **education** and the **glucose** variable in the original dataset as they contain many missing values. Also, the rest of the observations that contain missing values are removed. In the end, 4088 observations are present in the data for our latter analysis, which is a considerable sample size for our goal of study.
 
 Table 1 shows an overview of the data structure. 
 Table 1: An Overview of the Data on Heart Disease Used in the Study
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 heart_data <- read_csv("C:/Users/10128/Desktop/STA304/Final project/cleaned_data.csv")
+
+# kable(head(heart_data), format = "latex", digits = 0, booktabs = T) %>% 
+#   column_spec(column = 1:14, width = "0.5in")
 
 heart_data_1 <- heart_data[1:7]
 heart_data_2 <- heart_data[8:14]
@@ -60,12 +65,11 @@ meaning <- c("whether the patient is male", "the age of the patient", "whether t
 knitr::kable(data.frame(variable_name, meaning))
 ```
 
-
 The variable TenYearCHD indicates whether the patient has a 10-year-risk of developing a CHD, so we will use this as the binary response in the logistic model. Among all the potential predictors, variables **male**, **age**, **currentSmoker**, **BPMeds**, **diabetes**, **totChol**, **BMI** are selected as predictors in this study. As we have previously noted, the CHD devlops as the main blood vessels are blocked by cholestrol-containing deposits, which is a huge indication on healthy lifestype and physical status like total cholestrol value and BMI. Also, sex and age are often common factors that are involved in disease development. Hence, these variables are selected for further study.
 
 
 ## Model
-
+To accomplish the objective of predicting the risk of patients having CHD, it accounts for a clear indication of the adoption of a logistic model, which has a binary variable as the response.
 
 
 # Result
@@ -77,7 +81,7 @@ The variable TenYearCHD indicates whether the patient has a 10-year-risk of deve
 
 ## Next Steps
 
-
+\newpage
 # Appendix
 
 
