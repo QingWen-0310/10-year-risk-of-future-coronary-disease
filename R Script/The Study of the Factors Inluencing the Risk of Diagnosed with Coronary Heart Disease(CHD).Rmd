@@ -64,11 +64,31 @@ meaning <- c("whether the patient is male", "the age of the patient", "whether t
 knitr::kable(data.frame(variable_name, meaning))
 ```
 
-Table 1 shows an overview of the data structure, and Table 2 gives a precise definition for each of the variables present in the data set. The variable TenYearCHD indicates whether the patient has a 10-year-risk of developing a CHD, so we will use this as the binary response in the logistic model. Among all the potential predictors, variables **male**, **age**, **currentSmoker**, **BPMeds**, **diabetes**, **totChol**, **BMI** are selected as predictors in this study. As we have previously noted, the CHD develops as the main blood vessels are blocked by cholesterol-containing deposits, which is a huge indication of having a healthy lifestyle and physical status like total cholesterol value and BMI. Studies have shown that smoking changes the blood chemistry, which contamininates the oxygen-rish blood to flow into the heart. Also, sex and age are often common factors that are involved in disease development. Hence, these variables are selected for further study.
+Table 1 shows an overview of the data structure, and Table 2 gives a precise definition for each of the variables present in the data set. The variable TenYearCHD indicates whether the patient has a 10-year-risk of developing a CHD, so we will use this as the binary response in the logistic model. Among all the potential predictors, variables **male**, **age**, **currentSmoker**, **BPMeds**, **totChol**, **BMI** are selected as predictors in this study. As we have previously noted, the CHD develops as the main blood vessels are blocked by cholesterol-containing deposits, which is a huge indication of having a healthy lifestyle and physical status like total cholesterol value and the Body Mass Index(BMI). Studies have shown that smoking changes the blood chemistry, which contaminates the oxygen-rich blood to flow into the heart. Also, sex and age are often common factors that are involved in disease development. Hence, these variables are selected for further study.
 
 
 ## Model
-To accomplish the objective of predicting the risk of patients having CHD, it accounts for a clear indication of the adoption of a logistic model, which has a binary variable as the response.
+To accomplish the objective of predicting the risk of patients having CHD, there is a clear indication of the adoption of a logistic model, since we are trying to predict whether a patient has the risk of being diagnosed with CHD which is a binary response variable. Specifically, the theoretical model with our pre-selected predictors and response will be defined as follows: $$log(\frac{p}{1-p}) = \beta_0 + \beta_1x_{male} + \beta_2x_{age} + \beta_3x_{currentSmoker}+\beta_4x_{BloodPressureMedication} + \beta_5x_{totalCholesterol} + \beta_6x_{BMI}$$
+
+The variable on the left-side of the equation represents the log odds, which is a log transformation on the probability we target in finding. Any changes resulted from the significant predictor variables will result in the average change in the log odds. However, in order to form more understandable and more meaningful conclusions from the model output, we should apply the exponential transformation to the log odds in order to obtain our final probability. To give a simple but concrete example to demonstrate this mechanism, suppose we have a simplified version of our defined logistic model that only consists of one predictor: age, and the estimate for $\beta_0 = -10.8$, and the estimate for $\beta_1 = 0.23$. Suppose we have a patient that is 52 years-old, and we want to predict the probability of this patient having CHD. Using the estimated model, we would have $log(\frac{\hat{p}}{1-\hat{p}}) = -10.8 + 0.23*52$ = `r -10.8+0.23*52`. In order to find the probability, we apply an exponential transformation as follows: $e^{log(\frac{\hat{p}}{1-\hat{p}})} = \frac{\hat{p}}{1-\hat{p}} = e^{1.16}$. By isolating for $\hat{p}$, we can find the probability of the patient having CHD is 0.76.
+
+With this calculation in mind, we will define other parameters in the model in its naive meanings(i.e. their meaning as regard to the log odds):
+
+$p$: the predicted probability of the patient being diagnosed with CHD
+
+$\beta_1$: the average difference in log odds resulted from the patient being a male or a female
+
+$\beta_2$: the expected change in log odds resulted from a one unit increase in age
+
+$\beta_3$: the average difference in log odds resulted from whether the patient is a smoker
+
+$\beta_4$: the average difference in log odds resulted from whether the patient is on blood pressure medication
+
+$\beta_5$: the expected change in log odds resulted from a one unit increase in the total cholesterol level
+
+$\beta_6$: the expected change in the log odds resulted from a one unit increase in the BMI
+
+As seen from above, variables like *age*, *total cholesterol level* and *BMI* are all numerical variables, while the rest of the variables are categorical. Usually, categorical variables are treated as dummy variables in the model, which have different levels. For example, the *currentSmoker* variable would have two levels: whether the patient smokes or does not smoke. If the patient is a smoker, then the variable $x_{currentSmoker}$ would have a value of 1, and 0 otherwise. The categorical variables in our analysis all consist of two levels, and are coded as 1 if in the presence of the condition defined by the variable name, and 0 otherwise. 
 
 
 # Result
