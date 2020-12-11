@@ -10,7 +10,6 @@ bibliography: reference.bib
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(knitr)
-library(cowplot)
 ```
 
 # Note(Github Repo)
@@ -169,6 +168,7 @@ Hence, there seems to be a slightly higher probability for the patient who smoke
 ## Next Steps
 
 ## Concluding Remarks
+
 \newpage
 # Appendix
 
