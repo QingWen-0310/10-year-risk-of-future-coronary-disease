@@ -1,7 +1,7 @@
 ---
 title: "The Study of the Factors Inluencing the Risk of Diagnosed with Coronary Heart Disease(CHD)"
-author: ""
-date: "2020/12/9"
+author: "Qing Wen"
+date: "2020/12/21"
 output: pdf_document
 bibliography: reference.bib
 ---
@@ -10,6 +10,7 @@ bibliography: reference.bib
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(knitr)
+library(cowplot)
 ```
 
 # Note(Github Repo)
@@ -44,6 +45,7 @@ The dataset used in this study is obtained from Kaggle for which the author requ
 The original dataset is almost clean and does not require too much manipulation. We removed the **education** and the **glucose** variable in the original dataset as they contain many missing values. Also, the rest of the observations that contain missing values are removed. In the end, 4088 observations are present in the data for our latter analysis, which is considerable sample size for our goal of study.
 
 Table 1: An Overview of the Data on Heart Disease Used in the Study
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 heart_data <- read_csv("C:/Users/10128/Desktop/STA304/Final project/cleaned_data.csv")
 
@@ -57,6 +59,7 @@ knitr::kable(head(heart_data_2))
 ```
 
 Table 2: Definitions of Variables in the Data Set
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 variable_name = variable.names(heart_data)
 meaning <- c("whether the patient is male", "the age of the patient", "whether the patient is currently smoking", "cigarettes per day if the patient is smoking", "whether the patient is on blood pressure medication", "whether the patient had a stroke before", "whether the patient is hypertensive", "whether the patient has diabetes", "total cholesterol level", "systolic blood pressure", "diastolic blood pressure", "Body Mass Index", "the patient's heart rate", "whether the patient has a 10-year-risk of CHD")
@@ -93,13 +96,79 @@ As seen from above, variables like *age*, *total cholesterol level* and *BMI* ar
 
 # Result
 
+According to the model output, the fitted model is written as follows: $$log(\frac{\hat{p}}{1-\hat{p}}) = -7.7645 + 0.5656x_{male} + 0.0777x_{age} + 0.4154x_{currentSmoker}+0.6946x_{BloodPressureMedication}$$ $$+ 0.0025x_{totalCholesterol} + 0.0351x_{BMI}$$
+
+Table 3: Statistics for the Coefficient Estimates from the Logistic Model
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+attach(heart_data)
+# build the logistic model
+logit <- glm(TenYearCHD~as.factor(male) + age + as.factor(currentSmoker) + as.factor(BPMeds) + totChol + BMI, family = "binomial")
+
+# build a summary table from the summary output of the model
+Coefficient <- c("intercept", "male", "age", "current smoker", "blood pressure medication", "total cholesterol level", "BMI")
+
+Estimate <- c(round(summary(logit)$coefficient[1, 1], 4), round(summary(logit)$coefficient[2, 1], 4), round(summary(logit)$coefficient[3, 1], 4), round(summary(logit)$coefficient[4, 1], 4), round(summary(logit)$coefficient[5, 1], 4), round(summary(logit)$coefficient[6, 1], 4), round(summary(logit)$coefficient[7, 1], 4))
+
+Standard_Error <- c(round(summary(logit)$coefficient[1, 2], 4), round(summary(logit)$coefficient[2, 2], 4), round(summary(logit)$coefficient[3, 2], 4), round(summary(logit)$coefficient[4, 2], 4), round(summary(logit)$coefficient[5, 2], 4), round(summary(logit)$coefficient[6, 2], 4), round(summary(logit)$coefficient[7, 2], 4))
+
+p_value <- c("< 0.001", "< 0.001", "< 0.001", "< 0.001", round(summary(logit)$coefficient[5, 4], 4), round(summary(logit)$coefficient[6, 4], 4), round(summary(logit)$coefficient[7, 4], 4))
+
+summary_table <- data_frame(Coefficient, Estimate, Standard_Error, p_value)
+summary_table <- summary_table %>% 
+  rename("Standard Error" = Standard_Error) %>% 
+  rename("p value" = p_value)
+
+knitr::kable(summary_table)
+
+detach(heart_data)
+```
+
+From table 3, we see that all the coefficient estimates for the slope parameters are positive. Taking the predictor variable current Smoker as an example, table 3 shows the estimate for it is 0.4154. It means that holding other variables constant, if the patient is a current smoker, then the odds would increase by $e^{-7.7645+0.4154} = e^{-7.349}$. To get the probability of a patient who smokes being diagnosed with CHD, we get that $\hat{p} = \frac{e^{-7.349}}{1+e^{-7.349}}$ = `r (exp(-7.349))/(1+exp(-7.349))`. On the other hand, holding other variables constant, if the patient is not a current smoker, then the odds would increase by $e^{-7.7654}$. Following by a similar argument, the probability of the patient who does not smoke being diagnosed with CHD would be `r  (exp(-7.7654))/(1+exp(-7.7654))`. 
+
+Also, we see that all the coefficient estimates have p-value much less than 0.05, suggesting that these predictors are all statistically significant. Among all the predictors, the table shows that the coefficient estimates for *male*, *current smoker*, and *blood pressure medication* are relatively bigger than the rest of the estimates, not accounting for the intercept estimate. 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# tsex <- heart_data %>% 
+#   mutate(male = ifelse(male == 1, "male", "female")) %>% 
+#   group_by(male) %>% 
+#   summarise(proportion = mean(TenYearCHD))
+# 
+# tsmoker <- heart_data %>% 
+#   mutate(currentSmoker = ifelse(currentSmoker == 1, "smoker", "non-smoker")) %>% 
+#   group_by(currentSmoker) %>% 
+#   summarise(proportion = mean(TenYearCHD))
+# 
+# tmed <- heart_data %>% 
+#   mutate(BPMeds = ifelse(BPMeds == 1, "on medication", "not on medication")) %>% 
+#   group_by(BPMeds) %>% 
+#   summarise(proportion = mean(TenYearCHD))
+# 
+# knitr::kable(tsex)
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# knitr::kable(tsmoker)
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# knitr::kable(tmed)
+```
 
 
 # Discussion
+
+Hence, there seems to be a slightly higher probability for the patient who smokes being diagnosed with the disease than for the patient who does not smoke will be. Following the same constructs, The other coefficient estimates can be interpreted accordingly.
+
+## Summary
+
 ## Weaknesses
 
 ## Next Steps
 
+## Concluding Remarks
 \newpage
 # Appendix
 
