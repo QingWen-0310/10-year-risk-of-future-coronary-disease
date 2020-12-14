@@ -127,43 +127,61 @@ From table 3, we see that all the coefficient estimates for the slope parameters
 
 Also, we see that all the coefficient estimates have p-value much less than 0.05, suggesting that these predictors are all statistically significant. Among all the predictors, the table shows that the coefficient estimates for *male*, *current smoker*, and *blood pressure medication* are relatively bigger than the rest of the estimates, not accounting for the intercept estimate. 
 
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# tsex <- heart_data %>% 
-#   mutate(male = ifelse(male == 1, "male", "female")) %>% 
-#   group_by(male) %>% 
-#   summarise(proportion = mean(TenYearCHD))
-# 
-# tsmoker <- heart_data %>% 
-#   mutate(currentSmoker = ifelse(currentSmoker == 1, "smoker", "non-smoker")) %>% 
-#   group_by(currentSmoker) %>% 
-#   summarise(proportion = mean(TenYearCHD))
-# 
-# tmed <- heart_data %>% 
-#   mutate(BPMeds = ifelse(BPMeds == 1, "on medication", "not on medication")) %>% 
-#   group_by(BPMeds) %>% 
-#   summarise(proportion = mean(TenYearCHD))
-# 
-# knitr::kable(tsex)
+tsex <- heart_data %>%
+  mutate(male = ifelse(male == 1, "male", "female")) %>%
+  group_by(male) %>%
+  summarise(proportion = mean(TenYearCHD))
+
+tsmoker <- heart_data %>%
+  mutate(currentSmoker = ifelse(currentSmoker == 1, "smoker", "non-smoker")) %>%
+  group_by(currentSmoker) %>%
+  summarise(proportion = mean(TenYearCHD))
+
+tmed <- heart_data %>%
+  mutate(BPMeds = ifelse(BPMeds == 1, "on medication", "not on medication")) %>%
+  group_by(BPMeds) %>%
+  summarise(proportion = mean(TenYearCHD))
+
+knitr::kable(tsex)
 ```
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# knitr::kable(tsmoker)
+knitr::kable(tsmoker)
 ```
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# knitr::kable(tmed)
+knitr::kable(tmed)
 ```
 
 
 # Discussion
 
-Hence, there seems to be a slightly higher probability for the patient who smokes being diagnosed with the disease than for the patient who does not smoke will be. Following the same constructs, The other coefficient estimates can be interpreted accordingly.
-
 ## Summary
 
+In this study, we investigate the potential factors that influence the probability of one being diagnosed with CHD, a heart disease. We started by looking at the data set and variable definitions, then justifies the subset of variables we choose to include in this study. We then moved on to describe the logistic model and its interpretations. After that, results regarding the model output in included in the result section, and all the p-value for the coefficient estimates are statistically significant in a 0.05 significance level. Further interpretations of the results and remarks will be discussed next.
+
+## Conlcusion
+
+From the previous result section, we found that all the predictor variables seem to be significant, as the p-values for their coefficient estimates are all smaller than 0.05. Hence, we would not further consider variable selection techniques to try to reduce our existing model. However, looking closely to the estimates, variable *total cholesterol level* has a small estimate for its coefficient, namely 0.0025. When transformed back to the probability, we found that with 1 unit increase in total cholesterol level, the expected change in log odds is0.0025, holding other variables constant. Exponentiating it, we get that $e^{0.0025}$ = `r exp(0.0025)`. This means that we expect to see a 0.25% increase in the odds of being diagnosed with CHD, which is not too big a change. 
+
+On the other hand, looking at the variable *blood pressure medication*, it seems to be the predictor variable that has the greatest impact on the response variable, as it has the largest coefficient estimates among all the other selected predictors. Specifically, the odds for patients who take blood pressure medication `r (exp(0.6946)/(1+exp(0.6946)) - 1)*100`% higher than the odds for patients who do not take blood pressure medication. 
+
+Following the same constructs, The other coefficient estimates can be interpreted accordingly. Despite the magnitude of the impact each predictor has on the response variable, we also want to comment on the fact that all the coefficient estimates are positive. To elaborate on this, patients who is male, is currently smoking, and is on blood pressure medication all increase the probability of them being diagnosed with CHD. Furthermore, with older age, larger BMI, and higher total cholesterol level, the probability for a patient being diagnosed with CHD also increases. 
+
+Hence, it ties back to the fact that the development of the CHD hugely rely on the living habits the patients have. CHD can be preventable as patients take control of these controllable risk factors. 
+
+### TODO: further elaborate on each predictor's impact on the risk
+
+
+
+
 ## Weaknesses
+
+Though we obtained a model with all significant covariates and yield meaning results, there is also weaknesses that we fail to cover in the study. To start with, the data we used in the study does not indicate which round of the FHS study it was collected from, so we lack the ability to generalize the study to a more specifically population with certain demographic patterns. We yield our results and generalize it to the public which 
 
 ## Next Steps
 
