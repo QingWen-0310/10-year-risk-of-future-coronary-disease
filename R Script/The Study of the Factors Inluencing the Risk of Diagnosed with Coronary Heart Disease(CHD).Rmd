@@ -15,9 +15,10 @@ library(knitr)
 # Note(Github Repo)
 
 # Abstract
+
+
 ## Key Words
-
-
+Coronary Heart Disease, Risk Factor, Framingham Heart Study, Longitudinal Study
 
 # Introduction
 There has been a rising awareness globally towards improving human health and promoting the importance of tracking one's own health status. As an increasing amount of innovative technology comes out around the world, enhancement in medical equipment and new breakthroughs within the medical field has provided a strengthened understanding of diseases that were once thought untreatable. Doctors and scientists are also utilizing their expertise to convince people what should be done in their normal life as early prevention for any preventable diseases. 
@@ -128,16 +129,19 @@ From table 3, we see that all the coefficient estimates for the slope parameters
 Also, we see that all the coefficient estimates have p-value much less than 0.05, suggesting that these predictors are all statistically significant. Among all the predictors, the table shows that the coefficient estimates for *male*, *current smoker*, and *blood pressure medication* are relatively bigger than the rest of the estimates, not accounting for the intercept estimate. 
 
 
+Table 4: Proportion of Patients with Different Sex Having CHD
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tsex <- heart_data %>%
   mutate(male = ifelse(male == 1, "male", "female")) %>%
   group_by(male) %>%
   summarise(proportion = mean(TenYearCHD))
 
-tsmoker <- heart_data %>%
-  mutate(currentSmoker = ifelse(currentSmoker == 1, "smoker", "non-smoker")) %>%
-  group_by(currentSmoker) %>%
-  summarise(proportion = mean(TenYearCHD))
+# tsmoker <- heart_data %>%
+#   mutate(currentSmoker = ifelse(currentSmoker == 1, "smoker", "non-smoker")) %>%
+#   group_by(currentSmoker) %>%
+#   summarise(proportion = mean(TenYearCHD))
+# 
+# tsmoker
 
 tmed <- heart_data %>%
   mutate(BPMeds = ifelse(BPMeds == 1, "on medication", "not on medication")) %>%
@@ -147,16 +151,38 @@ tmed <- heart_data %>%
 knitr::kable(tsex)
 ```
 
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(tsmoker)
-```
-
+Table 5: Proportion of Patients Taking Blood Pressure Medication Having CHD 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 knitr::kable(tmed)
 ```
 
+Table 4 and 5 each gives a simple proportion summary for patients with certain characteristics having CHD. From Table 4, around 18.9% of the males in the data have CHD while around 11.9% of females in the data have CHD. From Table 5, around 32.5% of the patients who take blood pressure medications have CHD, and around 14.4% of the patients who do not take blood pressure medications have CHD.
+
+
+Table 6: Proportion of CHD Patients Smoking Different Number of Cigarettes Per Day
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+heart_data <- heart_data %>%
+  mutate(cigarettesGroup = case_when(
+    cigsPerDay == 0 ~ "do not smoke",
+    cigsPerDay > 0 & cigsPerDay < 15 ~ "under 15",
+    cigsPerDay >= 15 & cigsPerDay < 30 ~ "more than 15 but less than 30",
+    cigsPerDay >= 30 & cigsPerDay < 45 ~ "more than 30 but less than 45",
+    cigsPerDay >= 45 & cigsPerDay < 60 ~ "more than 45 but less than 60",
+    cigsPerDay >= 60 ~ "more than 60"
+  ))
+
+tsmoker1 <- heart_data %>% 
+  group_by(cigarettesGroup) %>%
+  mutate(total = n()) %>% 
+  summarise(proportion = sum(TenYearCHD)/611)
+
+knitr::kable(tsmoker1)
+```
+
+Table 6 shows that among the patients who are diagnosed with CHD, what proportion of them smokes the number of cigarettes as categorized by each cigarette group presented in the table. The table shows that patients who do not smoke constitute around 48% of patients who are diagnosed with CHD. Among the rest of the patients who do smoke, people who smoke 15 to 30 cigarettes per day constitutes the largest part of the patients who have CHD. On the other hand, only a small proportion of people diagnosed with CHD smokes around 45-60+ cigarettes per day is the lowest.
 
 # Discussion
 
@@ -170,7 +196,9 @@ From the previous result section, we found that all the predictor variables seem
 
 On the other hand, looking at the variable *blood pressure medication*, it seems to be the predictor variable that has the greatest impact on the response variable, as it has the largest coefficient estimates among all the other selected predictors. Specifically, the odds for patients who take blood pressure medication `r (exp(0.6946)/(1+exp(0.6946)) - 1)*100`% higher than the odds for patients who do not take blood pressure medication. 
 
-Following the same constructs, The other coefficient estimates can be interpreted accordingly. Despite the magnitude of the impact each predictor has on the response variable, we also want to comment on the fact that all the coefficient estimates are positive. To elaborate on this, patients who is male, is currently smoking, and is on blood pressure medication all increase the probability of them being diagnosed with CHD. Furthermore, with older age, larger BMI, and higher total cholesterol level, the probability for a patient being diagnosed with CHD also increases. 
+Following the same constructs, The other coefficient estimates can be interpreted accordingly. Despite the magnitude of the impact each predictor has on the response variable, we also want to comment on the fact that all the coefficient estimates are positive. To elaborate on this, patients who is male, is currently smoking, and is on blood pressure medication all increase the probability of them being diagnosed with CHD. Furthermore, with older age, larger BMI, and higher total cholesterol level, the probability for a patient being diagnosed with CHD also increases. Table 4 and 5 in the results section also confirms the fact that with the data collected, males and patients who are on blood pressure medication seems to more likely to be diagnosed with CHD.
+
+From Table 6 of the results, we see that patients who smoke constitutes a slightly larger proportion of the patients who are diagnosed with CHD. We anticipate that people who smoke would have a higher chance of developing CHD. Looking back to the data set, there are a lot less observations collected from people who smoke more than 30 cigarettes per day than from those who smoke less than 30 cigarettes per day. 
 
 Hence, it ties back to the fact that the development of the CHD hugely rely on the living habits the patients have. CHD can be preventable as patients take control of these controllable risk factors. 
 
@@ -181,16 +209,29 @@ Hence, it ties back to the fact that the development of the CHD hugely rely on t
 
 ## Weaknesses
 
-Though we obtained a model with all significant covariates and yield meaning results, there is also weaknesses that we fail to cover in the study. To start with, the data we used in the study does not indicate which round of the FHS study it was collected from, so we lack the ability to generalize the study to a more specifically population with certain demographic patterns. We yield our results and generalize it to the public which 
+Though we obtained a model with all significant covariates and yield meaningful results, there is also weaknesses that we fail to cover in the study. 
+
+To start with, the data we used in the study does not indicate which round of the FHS study it was collected from, so we lack the ability to generate a specific set of conclusions and descriptions of the pattern pertaining to the population of which the data is collected from. What we did accomplish is to try to generalize the result to the general public and develop some tips for early-prevention of the disease. Nonetheless, if more information could be extracted from the data source, and perhaps including data from other rounds of the data could yield more solid and reliable conclusions and potentially investigate the family pattern of the disease development. 
+
+Furthermore, as described previously, FHS is a longitudinal study and is thereby costly and time-consuming to conduct. So far, only 3 to 4 rounds of study has been carefully carried out. Though many studies and researches have been successful in extracting information from the data and provide the public with a much enhanced understanding on the CHD, the data collection process is still taking place and conclusions drawn previously in the study could be elevated or altered depending on the richer data available.
+
+Lastly, the set of predictor variable we choose to estimate their underlying risks for affecting the probability of being diagnosed with CHD is: **male**, **age**, **current smoker**, **blood pressure medication**, **total cholesterol level**, and **BMI**. Though we proved that these factors all contribute to the risk of having CHD, there is no way to validate that these are and are only the factors that potentially affect the outcome. The variables chosen are with sound justifications but potentially more underlying factors that do not seem to have an apparent relationship with the CHD could also affect the outcome significantly. 
+
 
 ## Next Steps
 
+To address some of the weaknesses mentioned previously, the FHS keeps a full record of all the observations from each round of the study. Their current goal is not only keep tracking of the families' medical histories from the first generation of the study, they now aim at more detailed objective of the studies since basic patterns of the CHD has been revealed in the past century. FHS now design and modify their studies to encounter the effect like the race and ethnicity have on the study outcome, which could improve the richness or the data and allow more analysis targeting at narrower topics to be conducted. 
+
+Also, it may be valuable to investigate more of the variables present in the current data set to find any other significant determinants for the outcome. Our goal would still be to obtain a parsimonious model. Assessing different subsets of predictors by building multiple models and comment on the conclusions could enrich the arguments we made in this study. 
+
 ## Concluding Remarks
+To conclude, we want first assert that the conclusions drawn from this study is based on an observational study and no causal relationship is inferred from the context. However, with observational data we still yield meaningful results to determine the potential risk factors for a patient being diagnosed with CHD. 
+
+### TODO: elaborate more on concluding remarks
+
+
 
 \newpage
-# Appendix
-
-
 # References
 
 
