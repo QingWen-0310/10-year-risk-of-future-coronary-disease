@@ -1,9 +1,12 @@
 ---
-title: "10_year_risk_of_future_coronary_disease"
+title: "CHD Data Cleaning"
 author: "Qing Wen"
-date: "2020/12/2"
+date: "2020/12/21"
 output: pdf_document
 ---
+# Pre=requisite
+Using this cleaning code requires the required data to be downloaded from the url: https://www.kaggle.com/dileep070/heart-disease-prediction-using-logistic-regression
+Save the data in your local directory and name it framingham.csv, and then set your working directory to the directory that contains this data set.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -21,15 +24,6 @@ heart_data <- heart_data_original %>%
   select(-c(education, glucose)) %>% 
   na.omit() 
 
-# heart_data <- heart_data %>% 
-#   rename(cigarettesPerDay = cigsPerDay) %>% 
-#   rename(onBloodPressureMedication = BPMeds) %>% 
-#   rename(previouslyHadStroke = prevalentStroke) %>% 
-#   rename(previouslyHypertensive = prevalentHyp) %>% 
-#   rename(totalCholestrolLevel = totChol) %>% 
-#   rename(systolicBloodPressure = sysBP) %>% 
-#   rename(diastolicBloodPressure = diaBP)
-  
 skim(heart_data)
 
 # save the cleaned dataset 
@@ -38,6 +32,6 @@ write_csv(heart_data, "C:/Users/10128/Desktop/STA304/Final project/cleaned_data.
 
 Despite of some missing values, the original data is pretty clean and easy to interpret. 
 
-With the objective of our study, we decide to remove the variable **education** as we do not think it has an as strong relationship with predicting the 10-yaer-risk of having heart disease. Also, variable **glucose** is removed from the dataset as it contains too many missing values(388 missing observations). 
+With the objective of our study, we decide to remove the variable **education** as we do not think it has an as strong relationship with predicting the 10-year-risk of having heart disease. Also, variable **glucose** is removed from the dataset as it contains too many missing values(388 missing observations). 
 
 After taking out these two variables, we then omit all the missing values in the remaining observations, which left us with 4088 observations in total.

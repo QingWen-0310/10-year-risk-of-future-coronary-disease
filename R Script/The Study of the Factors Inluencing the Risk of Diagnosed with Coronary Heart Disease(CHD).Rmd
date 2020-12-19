@@ -13,7 +13,7 @@ library(knitr)
 ```
 
 # Note
-The relevant codes the the output pdf version of the reoprt can be found in the following repo: https://github.com/QingWen-0310/10-year-risk-of-future-coronary-disease
+
 
 # Abstract
 Cardiovascular disease has been a leading cause of death globally and it is not until the late 20th century that people develop a more and more sophisticated understanding of its underlying cause and possible early prevention. In this study, we focus on investigating several potential risk factors that contribute to the determination of future Coronary Heart Disease, which is a type of cardiovascular disease. A logistic model is built using a binary response variable that determines whether the patient has Coronary Heart Disease. As a result, factors like smoking, blood pressure medication, and Body Mass Index all contribute to the development of the disease to certain extent. 
@@ -30,7 +30,7 @@ With no special preference, CHD is picked as the objective of our study and we w
 
 Therefore, in this study, potential risk factors contributing to the development of CHD is analyzed, and a logistic model is fitted to predict the probability of one being diagnosed with CHD in the future. In the end, we want to use the model output to develop the importance of paying attention to certain health indications to help people adapt to a healthier lifestyle in the effort of decreasing the risk of having a CHD. 
 
-The study will be conducted using the data obtained from a well-known longitudinal study regarding heart disease, namely the Framingham Heart Study which was first launched in 1948. In the Methodology section, more detailed information on the data would be provided and the underlying theory for the logistic model will be presented. Results regarding the analysis of the variables and the model output will be included in the Result section. Finally, further inferences regarding the results and any weaknesses associated with the study will be included in the Discussion section. 
+The study will be conducted using the data obtained from a well-known longitudinal study regarding heart disease, namely the Framingham Heart Study which was first launched in 1948. In the Methodology section, more detailed information on the data would be provided and the underlying theory for the logistic model will be presented. Results regarding the analysis of the variables and the model output will be included in the Result section. Finally, further inferences regarding the results and any weaknesses associated with the study will be included in the Discussion section. The relevant codes and the pdf version of the report can be found in the following repo: https://github.com/QingWen-0310/10-year-risk-of-future-coronary-disease
 
 
 # Methodology
