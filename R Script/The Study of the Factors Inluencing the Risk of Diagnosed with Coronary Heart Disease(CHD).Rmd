@@ -12,14 +12,12 @@ library(tidyverse)
 library(knitr)
 ```
 
-# Note
-
-
 # Abstract
 Cardiovascular disease has been a leading cause of death globally and it is not until the late 20th century that people develop a more and more sophisticated understanding of its underlying cause and possible early prevention. In this study, we focus on investigating several potential risk factors that contribute to the determination of future Coronary Heart Disease, which is a type of cardiovascular disease. A logistic model is built using a binary response variable that determines whether the patient has Coronary Heart Disease. As a result, factors like smoking, blood pressure medication, and Body Mass Index all contribute to the development of the disease to certain extent. 
 
 ## Key Words
 Coronary Heart Disease, Risk Factor, Framingham Heart Study, Longitudinal Study
+
 
 # Introduction
 There has been a rising awareness globally towards improving human health and promoting the importance of tracking one's own health status. As an increasing amount of innovative technology comes out around the world, enhancement in medical equipment and new breakthroughs within the medical field has provided a strengthened understanding of diseases that were once thought untreatable. Doctors and scientists are also utilizing their expertise to convince people what should be done in their normal life as early prevention for any preventable diseases. 
@@ -57,9 +55,6 @@ Table 1: An Overview of the Data on Heart Disease Used in the Study
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 heart_data <- read_csv("C:/Users/10128/Desktop/STA304/Final project/cleaned_data.csv")
 
-# kable(head(heart_data), format = "latex", digits = 0, booktabs = T) %>% 
-#   column_spec(column = 1:14, width = "0.5in")
-
 heart_data_1 <- heart_data[1:7]
 heart_data_2 <- heart_data[8:14]
 ```
@@ -70,11 +65,11 @@ Table 2: Baseline Characteristics of the Data Set
 variable_name = variable.names(heart_data)
 Meaning <- c("whether the patient is male", "the age of the patient", "whether the patient is currently smoking", "cigarettes per day if the patient is smoking", "whether the patient is on blood pressure medication", "whether the patient had a stroke before", "whether the patient is hypertensive", "whether the patient has diabetes", "total cholesterol level", "systolic blood pressure", "diastolic blood pressure", "Body Mass Index", "the patient's heart rate", "whether the patient has a 10-year-risk of CHD")
 
-min_variable <- c(summary(heart_data)[1,1], summary(heart_data)[1, 2], summary(heart_data)[1, 3], summary(heart_data)[1, 4], summary(heart_data)[1, 5], summary(heart_data)[1, 6], summary(heart_data)[1, 7], summary(heart_data)[1, 8], summary(heart_data)[1, 9], summary(heart_data)[1, 10], summary(heart_data)[1, 11], summary(heart_data)[1, 12], summary(heart_data)[1, 13], summary(heart_data)[1, 14])
+min_variable <- c(0, 32, 0, 0, 0,0, 0, 0, 113, 83.5, 48, 15.54, 44, 0)
 
-mean_variable <- c(summary(heart_data)[4, 1], summary(heart_data)[4, 2], summary(heart_data)[4, 3], summary(heart_data)[4, 4], summary(heart_data)[4, 5], summary(heart_data)[4, 6], summary(heart_data)[4, 7], summary(heart_data)[4, 8], summary(heart_data)[4, 9], summary(heart_data)[4, 10], summary(heart_data)[4, 11], summary(heart_data)[4, 12], summary(heart_data)[4, 13], summary(heart_data)[4, 14])
+mean_variable <- c("0.4347", "49.5", "0.4902", "8.992", "0.02935", "0.005382", "0.3092", "0.02544", "236.7", "132.2", "82.89", "25.80", "75.84", "0.1495")
 
-max_variable <- c(summary(heart_data)[6, 1], summary(heart_data)[6, 2], summary(heart_data)[6, 3], summary(heart_data)[6, 4], summary(heart_data)[6, 5], summary(heart_data)[6, 6], summary(heart_data)[6, 7], summary(heart_data)[6, 8], summary(heart_data)[6, 9], summary(heart_data)[6, 10], summary(heart_data)[6, 11], summary(heart_data)[6, 12], summary(heart_data)[6, 13], summary(heart_data)[6, 14])
+max_variable <- c(1, 70, 1, 70, 1, 1, 1, 1, 696, 295, 142.5, 56.8, 143, 1)
 
 characteristic_table <- data.frame(variable_name, Meaning, min_variable, mean_variable, max_variable)
 
@@ -122,6 +117,8 @@ The model is built using R Studio[@citeR], and the relevant packages used in thi
 
 According to the model output, the fitted model is written as follows: $$log(\frac{\hat{p}}{1-\hat{p}}) = -7.7645 + 0.5656x_{male} + 0.0777x_{age} + 0.4154x_{currentSmoker}+0.6946x_{BloodPressureMedication}$$ $$+ 0.0025x_{totalCholesterol} + 0.0351x_{BMI}$$
 
+
+\newpage
 Table 3: Statistics for the Coefficient Estimates from the Logistic Model
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
