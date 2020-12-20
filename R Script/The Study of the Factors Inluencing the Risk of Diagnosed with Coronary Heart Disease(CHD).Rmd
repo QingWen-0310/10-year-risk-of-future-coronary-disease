@@ -222,18 +222,18 @@ Therefore, it ties back to the fact that the development of CHD hugely relies on
 
 ## Weaknesses
 
-Though we obtained a model with all significant covariates and yield meaningful results, there is also weaknesses that we fail to cover in the study. 
+Though we obtained a model with all significant covariates and yield meaningful results, there are also weaknesses that we fail to cover in the study. 
 
 To start with, the data we used in the study does not indicate which round of the FHS study it was collected from, so we lack the ability to generate a specific set of conclusions and descriptions of the pattern pertaining to the population of which the data is collected from. What we did accomplish is to try to generalize the result to the general public and develop some tips for early-prevention of the disease. Nonetheless, if more information could be extracted from the data source, and perhaps including data from other rounds of the data could yield more solid and reliable conclusions and potentially investigate the family pattern of the disease development. 
 
 Furthermore, as described previously, FHS is a longitudinal study and is thereby costly and time-consuming to conduct. So far, only 3 to 4 rounds of study has been carefully carried out. Though many studies and researches have been successful in extracting information from the data and provide the public with a much enhanced understanding on the CHD, the data collection process is still taking place and conclusions drawn previously in the study could be elevated or altered depending on the richer data available.
 
-Lastly, the set of predictor variable we choose to estimate their underlying risks for affecting the probability of being diagnosed with CHD is: **male**, **age**, **current smoker**, **blood pressure medication**, **total cholesterol level**, and **BMI**. Though we proved that these factors all contribute to the risk of having CHD, there is no way to validate that these are and are only the factors that potentially affect the outcome. The variables chosen are with sound justifications but potentially more underlying factors that do not seem to have an apparent relationship with the CHD could also affect the outcome significantly. 
+Lastly, as mentioned previously in the *strengths and weaknesses* subsection of the Data section, the FHS may have voluntary response bias as the first round of study recruited participants that were mainly doctors and health organization workers. However, the diversity of the population did come in at the second round of study, which involved the children of the first generation. 
 
 
 ## Next Steps
 
-To address some of the weaknesses mentioned previously, the FHS keeps a full record of all the observations from each round of the study. Their current goal is not only to keep tracking of the families' medical histories from the first generation of the study, they now aim at the more detailed objective of the studies since basic patterns of the CHD has been revealed in the past century. FHS now design and modify their studies to encounter the effect race and ethnicity have on the study outcome, which could improve the richness of the data and allow more analysis targeting narrower topics to be conducted. 
+For further development of the study, the FHS keeps a full record of all the observations from each round of the study. Their current goal is not only to keep tracking of the families' medical histories from the first generation of the study, they now aim at the more detailed objective of the studies since basic patterns of the CHD has been revealed in the past century. FHS now design and modify their studies to encounter the effect race and ethnicity have on the study outcome, which could improve the richness of the data and allow more analysis targeting narrower topics to be conducted. 
 
 Also, it may be valuable to investigate more of the variables present in the current data set to find any other significant determinants for the outcome. Our goal would still be to obtain a parsimonious model. Assessing different subsets of predictors by building multiple models and comment on the conclusions could enrich the arguments we made in this study. 
 
