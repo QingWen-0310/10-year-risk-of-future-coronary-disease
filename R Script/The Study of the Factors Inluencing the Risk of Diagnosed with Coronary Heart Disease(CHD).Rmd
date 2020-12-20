@@ -96,6 +96,8 @@ With this calculation in mind, we will define other parameters in the model in i
 
 $p$: the predicted probability of the patient being diagnosed with CHD
 
+$\beta_0$: the intercept of the model, indicates the average value for log odds when all the predictors have the value 0
+
 $\beta_1$: the average difference in log odds resulted from the patient being a male or not a male
 
 $\beta_2$: the expected change in log odds resulted from a one unit increase in age
@@ -157,24 +159,17 @@ tsex <- heart_data %>%
   group_by(male) %>%
   summarise(proportion = mean(TenYearCHD))
 
-# tsmoker <- heart_data %>%
-#   mutate(currentSmoker = ifelse(currentSmoker == 1, "smoker", "non-smoker")) %>%
-#   group_by(currentSmoker) %>%
-#   summarise(proportion = mean(TenYearCHD))
-# 
-# tsmoker
-
-tmed <- heart_data %>%
-  mutate(BPMeds = ifelse(BPMeds == 1, "on medication", "not on medication")) %>%
-  group_by(BPMeds) %>%
-  summarise(proportion = mean(TenYearCHD))
-
 knitr::kable(tsex)
 ```
 
 Table 5: Proportion of Patients Taking Blood Pressure Medication Having CHD 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tmed <- heart_data %>%
+  mutate(BPMeds = ifelse(BPMeds == 1, "on medication", "not on medication")) %>%
+  group_by(BPMeds) %>%
+  summarise(proportion = mean(TenYearCHD))
+
 knitr::kable(tmed)
 ```
 
