@@ -36,14 +36,21 @@ The study will be conducted using the data obtained from a well-known longitudin
 # Methodology
 ## Data
 ### Framingham Heart Study(FHS)
-The Framingham Heart Study(FHS) is an ongoing longitudinal study on heart disease. With a history of 72 years, FHS has successfully altered public approaches to treat CVDs. Back in 1948, little was known about heart disease despite its cause for the increasing death rate. What FHS has accomplished is revolutionary, as it contributes to uncovering general patterns and trends which is meaningful and applicable to the general population[@citeNHLBI].
+The Framingham Heart Study(FHS) is an ongoing longitudinal cohort study on heart disease, which is a type of study that follows a group people over time to determine the natural development and the behaviors of the disease, and potentially finds factors that explain the behavior. With a history of 72 years, FHS has successfully altered public approaches to treat CVDs. Back in 1948, little was known about heart disease despite its cause for the increasing death rate. What FHS has accomplished is revolutionary, as it contributes to uncovering general patterns and trends which is meaningful and applicable to the general population[@citeNHLBI].
 
-As the study began in 1948, the first generation of the participants consisted of 5,209 men and women aged between 30-62 years from the town of Framingham, Massachusetts, who have not yet develop any noticeable symptoms of heart disease and have not had a stroke or heart attack beforehands[@citeFHS]. The participants were recruited and had their physical status extensively examined and recorded, and were expected to return for another round of detailed examination and lab tests every 5 to 6 years since then. In 1971, the next generation of these participants was enrolled in the study, and in 2002, the grandchildren of the original participants were examined for the new phase of the study. 
+As the study began in 1948, the first generation of the participants consisted of 5,209 men and women aged between 30-62 years from the town of Framingham, Massachusetts were recruited. The participants had not yet develop any noticeable symptoms of heart disease and have not had a stroke or heart attack beforehands[@citeFHS]. The participants had their physical statuses extensively examined and recorded, and were expected to return for another round of detailed examination and lab tests every 5 to 6 years since then. In 1971, the next generation of these participants was enrolled in the study, and in 2002, the grandchildren of the original participants were examined for the new phase of the study. 
+
+Hence, the target population of the study is the general public who has the chance to develop the heart disease. Since the study recruited voluntary participants, there is no sampling frame in theory. However, there is restriction on entry as participants need to be within the 30-62 years age bound and they do not have a heart attack or stroke before. The sample ended up being the 5,209 participants for the original round of cohort study.
+
+### Strengths and Weaknesses
+The Framingham Heart Study has been greatly appreciated for its scope and duration of the study. Statistics are taken and examined carefully throughout the conduction of the study. The importance and benefits the study has brought to the society is discussed previously. 
+
+We will turn to some of the weaknesses the study and the data has. First of all, the study recruited voluntary participants, who were mainly doctors and workers in the health organization back then. There is a potential voluntary response bias as the participants who were interested in the target of the study are more likely to take part in the study, which seemed to be the case for FHS. Secondly, the study focused on the participants in Framingham, and then generalized the study results to the general public. There is debate recently that the study over-estimated the risk for some lower-risk groups, for instance the British population[@citeUK].
 
 ### Data for Study
-The dataset used in this study is obtained from Kaggle for which the author requested from the original study. However, little details have been provided regarding which round of the study these observations are taken from, so we could not generalize the results to the specific study population. But the aim of this study is to determine the potential risk factors that could serve for the prediction of the risk of having a CHD. With the 4238 observations and 16 variables within the dataset after cleaning, we can use the prescribed model to yield predictions and provide analysis regarding some important variables in determining risks. 
+The data set used in this study is obtained from Kaggle for which the author requested from the original study. However, little details have been provided regarding which round of the study these observations are taken from, so we could not generalize the results to the specific study population. But the aim of this study is to determine the potential risk factors that could serve for the prediction of the risk of having a CHD. With the 4238 observations and 16 variables within the dataset after cleaning, we can use the prescribed model to yield predictions and provide analysis regarding some important variables in determining risks. 
 
-The original dataset is almost clean and does not require too much manipulation. We removed the **education** and the **glucose** variable in the original dataset as they contain many missing values. Also, the rest of the observations that contain missing values are removed. In the end, 4088 observations are present in the data for our latter analysis, which is considerable sample size for our goal of study.
+The original data set is almost clean and does not require too much manipulation. We removed the **education** and the **glucose** variable in the original data set as they contain many missing values. Also, the rest of the observations that contain missing values are removed. In the end, 4088 observations are present in the data for our latter analysis, which is considerable sample size for our goal of study.
 
 Table 1: An Overview of the Data on Heart Disease Used in the Study
 
@@ -55,20 +62,32 @@ heart_data <- read_csv("C:/Users/10128/Desktop/STA304/Final project/cleaned_data
 
 heart_data_1 <- heart_data[1:7]
 heart_data_2 <- heart_data[8:14]
-knitr::kable(head(heart_data_1))
-knitr::kable(head(heart_data_2))
 ```
 
-Table 2: Definitions of Variables in the Data Set
+Table 2: Baseline Characteristics of the Data Set
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 variable_name = variable.names(heart_data)
-meaning <- c("whether the patient is male", "the age of the patient", "whether the patient is currently smoking", "cigarettes per day if the patient is smoking", "whether the patient is on blood pressure medication", "whether the patient had a stroke before", "whether the patient is hypertensive", "whether the patient has diabetes", "total cholesterol level", "systolic blood pressure", "diastolic blood pressure", "Body Mass Index", "the patient's heart rate", "whether the patient has a 10-year-risk of CHD")
+Meaning <- c("whether the patient is male", "the age of the patient", "whether the patient is currently smoking", "cigarettes per day if the patient is smoking", "whether the patient is on blood pressure medication", "whether the patient had a stroke before", "whether the patient is hypertensive", "whether the patient has diabetes", "total cholesterol level", "systolic blood pressure", "diastolic blood pressure", "Body Mass Index", "the patient's heart rate", "whether the patient has a 10-year-risk of CHD")
 
-knitr::kable(data.frame(variable_name, meaning))
+min_variable <- c(summary(heart_data)[1,1], summary(heart_data)[1, 2], summary(heart_data)[1, 3], summary(heart_data)[1, 4], summary(heart_data)[1, 5], summary(heart_data)[1, 6], summary(heart_data)[1, 7], summary(heart_data)[1, 8], summary(heart_data)[1, 9], summary(heart_data)[1, 10], summary(heart_data)[1, 11], summary(heart_data)[1, 12], summary(heart_data)[1, 13], summary(heart_data)[1, 14])
+
+mean_variable <- c(summary(heart_data)[4, 1], summary(heart_data)[4, 2], summary(heart_data)[4, 3], summary(heart_data)[4, 4], summary(heart_data)[4, 5], summary(heart_data)[4, 6], summary(heart_data)[4, 7], summary(heart_data)[4, 8], summary(heart_data)[4, 9], summary(heart_data)[4, 10], summary(heart_data)[4, 11], summary(heart_data)[4, 12], summary(heart_data)[4, 13], summary(heart_data)[4, 14])
+
+max_variable <- c(summary(heart_data)[6, 1], summary(heart_data)[6, 2], summary(heart_data)[6, 3], summary(heart_data)[6, 4], summary(heart_data)[6, 5], summary(heart_data)[6, 6], summary(heart_data)[6, 7], summary(heart_data)[6, 8], summary(heart_data)[6, 9], summary(heart_data)[6, 10], summary(heart_data)[6, 11], summary(heart_data)[6, 12], summary(heart_data)[6, 13], summary(heart_data)[6, 14])
+
+characteristic_table <- data.frame(variable_name, Meaning, min_variable, mean_variable, max_variable)
+
+characteristic_table <- characteristic_table %>% 
+  rename("Variable Name" = variable_name) %>% 
+  rename("Minimum" = min_variable) %>% 
+  rename("Mean" = mean_variable) %>% 
+  rename("Maximum" = max_variable)
+
+knitr::kable(characteristic_table)
 ```
 
-Table 1 shows an overview of the data structure, and Table 2 gives a precise definition for each of the variables present in the data set. The variable TenYearCHD indicates whether the patient has a 10-year-risk of developing a CHD, so we will use this as the binary response in the logistic model. Among all the potential predictors, variables **male**, **age**, **currentSmoker**, **BPMeds**, **totChol**, **BMI** are selected as predictors in this study. As we have previously noted, the CHD develops as the main blood vessels are blocked by cholesterol-containing deposits, which is a huge indication of having a healthy lifestyle and physical statuses like total cholesterol value and the Body Mass Index(BMI). Studies have shown that smoking changes blood chemistry, which contaminates the oxygen-rich blood to flow into the heart. Also, sex and age are often common factors that are involved in disease development. Hence, these variables are selected for further study.
+Table 1 shows an overview of the data structure, and Table 2 presents the baseline characteristics of the data for each of the variables present in the data set. The variable **TenYearCHD** indicates whether the patient has a 10-year-risk of developing a CHD, so we will use this as the binary response in the logistic model. Among all the potential predictors, variables **male**, **age**, **currentSmoker**, **BPMeds**, **totChol**, **BMI** are selected as predictors in this study. As we have previously noted, the CHD develops as the main blood vessels are blocked by cholesterol-containing deposits, which is a huge indication of examining a patient's lifestyle and physical statuses like total cholesterol value and the Body Mass Index(BMI). Studies have shown that smoking changes blood chemistry, which contaminates the oxygen-rich blood that flows into the heart. Also, sex and age are often common factors that are involved in disease development. Hence, these variables are selected for further study.
 
 
 ## Model
