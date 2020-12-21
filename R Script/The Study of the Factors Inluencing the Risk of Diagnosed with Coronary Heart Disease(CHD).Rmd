@@ -41,26 +41,24 @@ As the study began in 1948, the first generation of the participants consisted o
 Hence, the target population of the study is the general public who has the chance to develop the heart disease. Since the study recruited voluntary participants, there is no sampling frame in theory. However, there is restriction on entry as participants need to be within the 30-62 years age bound and they do not have a heart attack or stroke before. The sample ended up being the 5,209 participants for the original round of cohort study.
 
 ### Strengths and Weaknesses
-The FHS has been greatly appreciated for its scope and duration of the study. Statistics are taken and examined carefully throughout the conduction of the study. The importance and benefits the study has brought to the society are discussed previously. 
+The FHS has been greatly appreciated for its scope and duration of the study. Statistics are taken and examined carefully throughout the conduction of the study. The data set obtained for this study has a large sample size(around 4000 observations), and contains predictors that are highly relevant to the purpose of the study. Though missing values are taking out which reduces the sample size, the reduction is not large enough to decrease the statistical power of the analysis. 
 
-We will turn to some of the weaknesses the study and the data have. First of all, the study recruited voluntary participants, who were mainly doctors and workers in the health organization back then. There is a potential voluntary response bias as the participants who were interested in the target of the study are more likely to take part in the study, which seemed to be the case for FHS. Secondly, the study focused on the participants in Framingham, and then generalized the study results to the general public. There is debate recently that the study over-estimated the risk for some lower-risk groups, for instance the British population[@citeUK].
+We then turn to some of the weaknesses the study and the data have. First of all, the study recruited voluntary participants, who were mainly doctors and workers in the health organization back then. There is a potential voluntary response bias as the participants who were interested in the target of the study are more likely to take part in the study, which seemed to be the case for FHS. Secondly, the study focused on the participants in Framingham, and then generalized the study results to the general public. There is debate recently that the study over-estimated the risk for some lower-risk groups, for instance the British population[@citeUK].
 
 ### Data for Study
-The data set used in this study is obtained from Kaggle for which the author requested from the original study. However, little details have been provided regarding which round of the study these observations are taken from, so we could not generalize the results to the specific study population. But the aim of this study is to determine the potential risk factors that could serve for the prediction of the risk of having a CHD. With the 4238 observations and 16 variables within the dataset after cleaning, we can use the prescribed model to yield predictions and provide analysis regarding some important variables in determining risks. 
+The data set used in this study is obtained from Kaggle for which the author requested from the original study. However, little details have been provided regarding which round of the study these observations are taken from, so we could not generalize the results to the specific study population. But the aim of this study is to determine the potential risk factors that could serve for the prediction of the risk of having a CHD. With the 4238 observations and 16 variables within the data set after cleaning, we can use the prescribed model to yield predictions and provide analysis regarding some important variables in determining risks. 
 
 The original data set is almost clean and does not require too much manipulation. We removed the *education* and the *glucose* variable in the original data set as they contain many missing values. Also, the rest of the observations that contain missing values are removed. In the end, 4088 observations are present in the data for our latter analysis, which is a considerable sample size for our goal of study.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-heart_data <- read_csv("C:/Users/10128/Desktop/STA304/Final project/cleaned_data.csv")
-# heart_data_1 <- heart_data[1:7]
-# heart_data_2 <- heart_data[8:14]
-# heart_data_1
-# heart_data_2
+setwd("C:/Users/10128/Desktop/STA304/Final project")
+heart_data <- read_csv("cleaned_data.csv")
 ```
 
 Table 1: Baseline Characteristics of the Data Set
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# create the baseline characteristic table for the data set
 variable_name = variable.names(heart_data)
 Meaning <- c("whether the patient is male", "the age of the patient", "whether the patient is currently smoking", "cigarettes per day if the patient is smoking", "whether the patient is on blood pressure medication", "whether the patient had a stroke before", "whether the patient is hypertensive", "whether the patient has diabetes", "total cholesterol level", "systolic blood pressure", "diastolic blood pressure", "Body Mass Index", "the patient's heart rate", "whether the patient has a 10-year-risk of CHD")
 
@@ -153,6 +151,7 @@ Also, we see that all the coefficient estimates have a p-value much less than 0.
 
 Table 3: Proportion of Patients with Different Sex Having CHD
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# proportion table with different sex
 tsex <- heart_data %>%
   mutate(male = ifelse(male == 1, "male", "female")) %>%
   group_by(male) %>%
@@ -167,6 +166,7 @@ knitr::kable(tsex)
 Table 4: Proportion of Patients Taking Blood Pressure Medication Having CHD 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# proportion table with blood pressure medication
 tmed <- heart_data %>%
   mutate(BPMeds = ifelse(BPMeds == 1, "on medication", "not on medication")) %>%
   group_by(BPMeds) %>%
@@ -184,6 +184,7 @@ Table 3 and 4 each gives a simple proportion summary for patients with certain c
 Table 5: Proportion of CHD Patients Smoking Different Number of Cigarettes Per Day
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# create the table depicting the proportion of patients who have CHD and their number of cigarettes smoked per day
 
 heart_data <- heart_data %>%
   mutate(cigarettesGroup = case_when(
