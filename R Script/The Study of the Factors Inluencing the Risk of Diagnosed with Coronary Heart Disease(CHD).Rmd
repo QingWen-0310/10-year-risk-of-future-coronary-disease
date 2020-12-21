@@ -120,8 +120,6 @@ The model is built using R Studio[@citeR], and the relevant packages used in thi
 
 According to the model output, the fitted model is written as follows: $$log(\frac{\hat{p}}{1-\hat{p}}) = -7.7645 + 0.5656x_{male} + 0.0777x_{age} + 0.4154x_{currentSmoker}+0.6946x_{BloodPressureMedication}$$ $$+ 0.0025x_{totalCholesterol} + 0.0351x_{BMI}$$
 
-
-\newpage
 Table 2: Statistics for the Coefficient Estimates from the Logistic Model
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -160,6 +158,9 @@ tsex <- heart_data %>%
   group_by(male) %>%
   summarise(proportion = mean(TenYearCHD))
 
+tsex <- tsex %>% 
+  rename("Sex" = male)
+
 knitr::kable(tsex)
 ```
 
@@ -171,12 +172,15 @@ tmed <- heart_data %>%
   group_by(BPMeds) %>%
   summarise(proportion = mean(TenYearCHD))
 
+tmed <- tmed %>% 
+  rename("Blood Pressure Medication" = BPMeds)
+
 knitr::kable(tmed)
 ```
 
 Table 3 and 4 each gives a simple proportion summary for patients with certain characteristics having CHD. From Table 3, around 18.9% of the males in the data have CHD while around 11.9% of females in the data have CHD. From Table 4, around 32.5% of the patients who take blood pressure medications have CHD, and around 14.4% of the patients who do not take blood pressure medications have CHD.
 
-
+\newpage
 Table 5: Proportion of CHD Patients Smoking Different Number of Cigarettes Per Day
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -195,6 +199,9 @@ tsmoker1 <- heart_data %>%
   group_by(cigarettesGroup) %>%
   mutate(total = n()) %>% 
   summarise(proportion = sum(TenYearCHD)/611)
+
+tsmoker1 <- tsmoker1 %>% 
+  rename("Cigarettes Group" = cigarettesGroup)
 
 knitr::kable(tsmoker1)
 ```
