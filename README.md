@@ -6,5 +6,6 @@ The original data is collected from an ongoing cardiovascular disease study on p
 In this study, we use the available predictor variables in the data set to build a logistic model to form prediction of the risk of having coronary disease.
 
 Sections contained in this repo:
+- Data: contains the raw data obtained from Kaggle
 - R Script: contains all relevant R code used in this study.
 - Output: contains the pdf version of the report
