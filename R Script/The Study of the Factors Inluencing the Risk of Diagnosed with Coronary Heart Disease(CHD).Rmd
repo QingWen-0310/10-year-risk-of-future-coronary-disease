@@ -206,7 +206,21 @@ tsmoker1 <- tsmoker1 %>%
 knitr::kable(tsmoker1)
 ```
 
-Table 5 shows that among the patients who are diagnosed with CHD, what proportion of them smokes the number of cigarettes as categorized by each cigarette group presented in the table. The table shows that patients who do not smoke constitute around 48% of patients who are diagnosed with CHD. Among the rest of the patients who do smoke, people who smoke 15 to 30 cigarettes per day constitutes the largest part of the patients who have CHD. On the other hand, only a small proportion of people diagnosed with CHD smokes around 45-60+ cigarettes per day.
+
+Graph 1: Proportion of Patients in Each Cigarettes Group Having CHD
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+heart_data %>% 
+  ggplot(aes(x = cigarettesGroup, fill = as.factor(TenYearCHD))) +
+  geom_bar() +
+  labs(title = "Proportion of Patients in Each Cigarettes Group Having CHD", fill = "Have CHD")+
+  ylab("Cigarettes Group") +
+  coord_flip()
+```
+
+Graph 1 shows the proportion of patients in each cigarettes group that have CHD. The cigarettes group are divided into different categories regarding to the different number of cigarettes the patients smoke per day. Patients diagnosed with CHD in each group represents a relatively small proportion of each group. 
+
+In addition, Table 5 shows that among all the patients who are diagnosed with CHD, what proportion of them smokes the number of cigarettes as categorized by each cigarette group presented in the table. The table shows that patients who do not smoke constitute around 48% of patients who are diagnosed with CHD. Among the rest of the patients who do smoke, people who smoke 15 to 30 cigarettes per day constitutes the largest part of the patients who have CHD. On the other hand, only a small proportion of people diagnosed with CHD smokes around 45-60+ cigarettes per day.
 
 # Discussion
 
