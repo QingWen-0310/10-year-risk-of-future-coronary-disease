@@ -216,7 +216,7 @@ Graph 1: Proportion of Patients in Each Cigarettes Group Having CHD
 heart_data %>% 
   ggplot(aes(x = cigarettesGroup, fill = as.factor(TenYearCHD))) +
   geom_bar() +
-  labs(title = "Proportion of Patients in Each Cigarettes Group Having CHD", fill = "Have CHD")+
+  labs(fill = "Have CHD")+
   ylab("Cigarettes Group") +
   coord_flip()
 ```
