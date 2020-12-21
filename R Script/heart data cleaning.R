@@ -3,7 +3,9 @@
 # The purpose of this code is to do some cleaning to the data set obtained from:
 # https://www.kaggle.com/dileep070/heart-disease-prediction-using-logistic-regression
 # Save the required data in your local directory and name it framingham.csv, 
-# and then set your working directory to the directory that contains this data set.
+# then sets the working directory to the location of the data file.
+# The code reads in the original data and then output the cleaned_data.csv which would be used in
+# the rmd file that produces the report.
 
 # Despite of some missing values, the original data is pretty clean and easy to interpret. 
 # With the objective of our study, we decide to remove the variable education as we do not think it has an as strong 
@@ -21,7 +23,7 @@
 library(tidyverse)
 library(skimr)
 # read in the original dataset
-heart_data_original <- read_csv("C:/Users/10128/Desktop/STA304/Final project/framingham.csv")
+heart_data_original <- read_csv("framingham.csv")
 # skim(heart_data_original)
 
 # take out two variables and remove the missing values in the rest of the observations
@@ -32,6 +34,6 @@ heart_data <- heart_data_original %>%
 skim(heart_data)
 
 # save the cleaned dataset 
-write_csv(heart_data, "C:/Users/10128/Desktop/STA304/Final project/cleaned_data.csv")
+write_csv(heart_data, "cleaned_data.csv")
 
 

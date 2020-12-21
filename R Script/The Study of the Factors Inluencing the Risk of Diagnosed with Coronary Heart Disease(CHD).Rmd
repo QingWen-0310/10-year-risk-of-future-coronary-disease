@@ -51,7 +51,9 @@ The data set used in this study is obtained from Kaggle for which the author req
 The original data set is almost clean and does not require too much manipulation. We removed the *education* and the *glucose* variable in the original data set as they contain many missing values. Also, the rest of the observations that contain missing values are removed. In the end, 4088 observations are present in the data for our latter analysis, which is a considerable sample size for our goal of study.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-setwd("C:/Users/10128/Desktop/STA304/Final project")
+# set the working directory to where the data is located and read in the cleaned data set from heart data cleaning.R
+
+# setwd("C:/Users/10128/Desktop/STA304/Final project")
 heart_data <- read_csv("cleaned_data.csv")
 ```
 
